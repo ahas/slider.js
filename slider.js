@@ -1,6 +1,6 @@
 (function () {
     // 제이쿼리가 있을 때 플러그인으로 등록
-    if (jQuery) {
+    if (window.jQuery) {
         let slider = null;
         $.fn.slider = function (param) {
             if ($.isPlainObject(param) || !param) {
