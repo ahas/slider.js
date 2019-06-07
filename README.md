@@ -55,3 +55,10 @@ easing(기본 값: 'easeInOutSine'): 슬라이드가 넘어가는 애니메이�
 * easeInBounce
 * easeOutBounce
 * easeInOutBounce
+
+
+
+# 참고 자료
+[Coding Math: Episode 27 - Easing and Tweening](https://www.youtube.com/watch?v=zLh0K1PdUbc): easing 함수 관련
+[Coding Math: Episode 31 - Tweening Part III](https://www.youtube.com/watch?v=VBLJ9hzW5fY): 애니메이션 관련
+[IE9 이하의 구버전 브라우저에 대한 requestAnimationFrame 지원](https://stackoverflow.com/questions/24676874/error-requestanimationframe-in-ie9-any-alternate-solution)
