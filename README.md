@@ -3,14 +3,17 @@
 <blockquote>
   <pre>
     // 제이쿼리 방식 초기화
-    $('.slider').slider({ 옵션 });  
+    $('.slider').slider({ 옵션 });
+    $('.slider').slider('메소드 이름');
   </pre>
 </blockquote>
 
 <blockquote>
   <pre>
-    논 제이쿼리 방식 초기화
+    // 논 제이쿼리 방식 초기화
     const slider = new Slider(셀렉터 또는 엘리먼트, { 옵션 });
+    slider.refresh();
+    slider.slide(3);
   </pre>
 </blockquote>
 
