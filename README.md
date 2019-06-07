@@ -16,34 +16,34 @@ auto(기본 값: true): 자동으로 넘어가는지에 대한 여부
 easing(기본 값: 'easeInOutSine'): 슬라이드가 넘어가는 애니메이션에 사용할 easing 함수
 
 # easing 함수 목록
-linear
-easeInQuad
-easeOutQuad
-easeInOutQuad
-easeInCubic
-easeOutCubic
-easeInOutCubic
-easeInQuart
-easeOutQuart
-easeInOutQuart
-easeInQuint
-easeOutQuint
-easeInOutQuint
-easeInSine
-easeOutSine
-easeInOutSine
-easeInExpo
-easeOutExpo
-easeInOutExpo
-easeInCirc
-easeOutCirc
-easeInOutCirc
-easeInElastic
-easeOutElastic
-easeInOutElastic
-easeInBack
-easeOutBack
-easeInOutBack
-easeInBounce
-easeOutBounce
-easeInOutBounce
+* linear
+* easeInQuad
+* easeOutQuad
+* easeInOutQuad
+* easeInCubic
+* easeOutCubic
+* easeInOutCubic
+* easeInQuart
+* easeOutQuart
+* easeInOutQuart
+* easeInQuint
+* easeOutQuint
+* easeInOutQuint
+* easeInSine
+* easeOutSine
+* easeInOutSine
+* easeInExpo
+* easeOutExpo
+* easeInOutExpo
+* easeInCirc
+* easeOutCirc
+* easeInOutCirc
+* easeInElastic
+* easeOutElastic
+* easeInOutElastic
+* easeInBack
+* easeOutBack
+* easeInOutBack
+* easeInBounce
+* easeOutBounce
+* easeInOutBounce
