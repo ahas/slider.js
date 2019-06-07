@@ -363,5 +363,5 @@ Slider.EasingFunctions = {
     easeInOutBounce: function(t, b, c, d) {
         if (t < d / 2) return Slider.EasingFunctions.easeInBounce(t * 2, 0, c, d) * .5 + b;
         return Slider.EasingFunctions.easeOutBounce(t * 2 - d, 0, c, d) * .5 + c * .5 + b;
-    },
+    }
 };
