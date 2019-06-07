@@ -1,0 +1,33 @@
+.slider {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    overflow: hidden;
+}
+
+    .slider > * {
+        position: absolute;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+    }
+
+    .slider img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+    }
+
+    .slider img.dark {
+        filter: brightness(70%);
+    }
+
+    .slider img.blur {
+        filter: blur(3px);
+        transform: scale(1.1, 1.1);
+    }
+
+    .slider img.dark.blur {
+        filter: blur(3px) brightness(70%);
+    }

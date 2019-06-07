@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" type='text/javascript'></script>
+        <link href="slider.css" rel="stylesheet">
+        <script src="slider.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function () {
+                const $jquery_indicators = $('.jquery > .indicators');
+                $jquery_indicators.find('.indicator').click(function () {
+                    $('.jquery > .slider').slider('slide', $(this).index());
+                });
+                // 제이쿼리 플러그인 방식 슬라이더
+                // 메소드 사용시 $('.slider').slider('메소드 이름'); 와 같은 형식으로 사용
+                // * 옵션
+                // interval: 페이지당 대기시간, 기본 값: 3000
+                // duration: 다음 페이지로 넘어가는데 걸리는 시간, 기본 값: 1000
+                // page_index: 시작 페이지 인덱스, 기본 값: 0
+                // page_offset: 초기 슬라이드 위치
+                // sensivility: 터치 민감도, 기본 값: 100
+                // auto: 자동으로 넘어가는지에 대한 여부, 기본 값: true
+                // easing: 슬라이드가 넘어가는 애니메이션에 사용할 easing 함수, 기본 값: 'easeInOutSine', slider.js 최하단 Slider.EasingFunctions 참고
+                $('.slider').slider({
+                    onPaged: function (index) {
+                        $jquery_indicators.find('.indicator').removeClass('active').eq(index).addClass('active');
+                    }
+                });
+                const $non_jquery_indicators = $('.non-jquery > .indicators');
+                // 제이쿼리 비사용 방식 슬라이더
+                // 셀렉터를 사용해도 되고 엘리먼트를 넘겨줘도 된다.
+                const slider = new Slider('.non-jquery > .slider', {
+                    onPaged: function (index) {
+                        $non_jquery_indicators.find('.indicator').removeClass('active').eq(index).addClass('active');
+                    }
+                });
+                $non_jquery_indicators.find('.indicator').click(function () {
+                    slider.slide($(this).index());
+                });
+            });
+        </script>
+        <style>
+            .indicators {
+                left: 0;
+                bottom: 2rem;
+                width: 100%;
+                position: relative;
+                text-align: center;
+            }
+            .indicator {
+                margin: 0 5px;
+                width: 8px;
+                height: 8px;
+                display: inline-block;
+                border-radius: 100%;
+                background: white;
+                cursor: pointer;
+            }
+            .indicator.active {
+                background-color: black;
+            }
+            p {
+                color: white;
+                text-align: center;
+                z-index: 2;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 제이쿼리 버전 -->
+        <div class="jquery">
+            <div class="slider">
+                <img src="images/0.jpg">
+                <img src="images/1.png">
+                <img src="images/2.jpg">
+                <img src="images/3.png">
+            </div>
+            <div class="indicators">
+                <div class="indicator"></div>
+                <div class="indicator"></div>
+                <div class="indicator"></div>
+                <div class="indicator"></div>
+            </div>
+        </div>
+        <!-- 논 제이쿼리 버전 -->
+        <div class="non-jquery">
+            <div class="slider">
+                <img src="images/0.jpg">
+                <img src="images/1.png">
+                <img src="images/2.jpg">
+                <img src="images/3.png">
+            </div>
+            <div class="indicators">
+                <div class="indicator"></div>
+                <div class="indicator"></div>
+                <div class="indicator"></div>
+                <div class="indicator"></div>
+            </div>
+        </div>
+    </body>
+</html>
