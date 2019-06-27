@@ -1,7 +1,7 @@
 (function () {
     // 제이쿼리가 있을 때 플러그인으로 등록
     if (window.jQuery) {
-        let slider = null;
+        var slider = null;
         $.fn.slider = function (param) {
             if ($.isPlainObject(param) || !param) {
                 slider = new Slider(this.get(0), param);
@@ -12,8 +12,8 @@
         };
     }
     // 애니메이션 요청관련 함수가 없을 때 대체 함수 구현
-    const vendors = ['webkit', 'moz'];
-    let last_time = 0;
+    var vendors = ['webkit', 'moz'];
+    var last_time = 0;
     for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
         window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
         window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
@@ -21,9 +21,9 @@
 
     if (!window.requestAnimationFrame)
         window.requestAnimationFrame = function (callback, element) {
-            const current_time = new Date().getTime();
-            const time_to_call = Math.max(0, 16 - (current_time - last_time));
-            const id = window.setTimeout(function () {
+            var current_time = new Date().getTime();
+            var time_to_call = Math.max(0, 16 - (current_time - last_time));
+            var id = window.setTimeout(function () {
                 callback(current_time + time_to_call);
             }, time_to_call);
             last_time = current_time + time_to_call;
@@ -69,10 +69,11 @@ function Slider(param, config) {
 }
 
 Slider.prototype.init = function () {
-    const slider = this;
-    let drag_delay = null;
+    var slider = this;
+    var drag_delay = null;
     this.element.onmousedown = function (e) {
         slider.mouse.is_down = true;
+        slider.mouse.dx = slider.mouse.dy = slider.mouse.lx = slider.mouse.ly = 0;
         slider.mouse.sx = slider.mouse.x = slider.mouse.old_x = e.clientX;
         slider.mouse.sy = slider.mouse.y = slider.mouse.old_y = e.clientY;
         slider.stop();
@@ -101,7 +102,7 @@ Slider.prototype.init = function () {
         }
         drag_delay = setTimeout(function () {
             slider.start();
-        }, slider.duration);
+        }, slider.duration + slider.interval);
     };
     // 터치 이벤트 구현
     this.element.ontouchstart = function (e) {
@@ -136,16 +137,16 @@ Slider.prototype.previous = function () {
 };
 
 Slider.prototype.slide = function (page_index) {
-    const slider = this;
+    var slider = this;
     this.page_index = page_index;
-    const start_time = new Date();
+    var start_time = new Date();
     // 애니메이션 대체 구현
     (function () {
-        const start_offset = slider.page_offset;
-        const change_offset = slider.page_width * slider.page_index - start_offset;
-        const duration = slider.duration;
+        var start_offset = slider.page_offset;
+        var change_offset = slider.page_width * slider.page_index - start_offset;
+        var duration = slider.duration;
         function update() {
-            let time = new Date() - start_time;    
+            var time = new Date() - start_time;
             if (time < duration) {
                 slider.page_offset = slider.easing(time, start_offset, change_offset, duration);
                 slider.anim_request_id = requestAnimationFrame(update);
@@ -175,16 +176,15 @@ Slider.prototype.refresh = function () {
             this.onPaged(this.page_index);
         }
     }
-    let i = 0;
-    for (const child of this.element.children) {
-        let x = this.page_width * i - this.page_offset;
+    for (var i = 0; i < this.element.children.length; i++) {
+        var child = this.element.children[i];
+        var x = this.page_width * i - this.page_offset;
         if (x <= -child.clientWidth) {
             x += this.page_length;
         } else if (x >= this.page_width) {
             x -= this.page_length;
         }            
-        child.style.transform = `translateX(${x}px)`;
-        i++;
+        child.style.transform = 'translateX(' + x + 'px)';
     }
     return this;
 };
@@ -206,7 +206,7 @@ Slider.prototype.drag = function (offset) {
 }
 
 Slider.prototype.start = function () {
-    const slider = this;
+    var slider = this;
     this.stop();
     if (this.auto) {
         this.tick = setInterval(function () {
@@ -302,7 +302,9 @@ Slider.EasingFunctions = {
         if ((t /= d / 2) < 1) return -c / 2 * (Math.sqrt(1 - t * t) - 1) + b;
         return c / 2 * (Math.sqrt(1 - (t -= 2) * t) + 1) + b;
     },
-    easeInElastic: function(t, b, c, d, a = 1.2, p = .3) {
+    easeInElastic: function(t, b, c, d, a, p) {
+        a = a || 1.2;
+        p = p || .3;
         if (t == 0) return b;
         if ((t /= d) == 1) return b + c;
         if (!p) p = d * .3;
@@ -312,7 +314,9 @@ Slider.EasingFunctions = {
         } else var s = p / (2 * Math.PI) * Math.asin(c / a);
         return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
     },
-    easeOutElastic: function(t, b, c, d, a = 1.2, p = .3) {
+    easeOutElastic: function(t, b, c, d, a, p) {
+        a = a || 1.2;
+        p = p || .3;
         if (t == 0) return b;
         if ((t /= d) == 1) return b + c;
         if (!p) p = d * .3;
@@ -322,7 +326,9 @@ Slider.EasingFunctions = {
         } else var s = p / (2 * Math.PI) * Math.asin(c / a);
         return a * Math.pow(2, -10 * t) * Math.sin((t * d - s) * (2 * Math.PI) / p) + c + b;
     },
-    easeInOutElastic: function(t, b, c, d, a = 1.2, p = .3) {
+    easeInOutElastic: function(t, b, c, d, a, p) {
+        a = a || 1.2;
+        p = p || .3;
         if (t == 0) return b;
         if ((t /= d / 2) == 2) return b + c;
         if (!p) p = d * (.3 * 1.5);
